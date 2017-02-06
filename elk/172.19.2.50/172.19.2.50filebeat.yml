@@ -1,0 +1,19 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/nginx/access.log
+      input_type: log
+      multiline:
+        negate: true
+        match: after
+      tail_files: false
+  registry_file: /var/lib/filebeat/registry
+output:
+  logstash:
+    hosts: ["172.19.2.51:20000"]
+    worker: 4
+shipper:
+logging:
+  files:
+    rotateeverybytes: 10485760 # = 10MB

@@ -1,0 +1,11 @@
+network.bind_host: 0.0.0.0
+network.host: 172.19.2.49
+cluster.name: es-cluster
+node.name: "es-node3"
+node.master: true
+discovery.zen.minimum_master_nodes: 1
+discovery.zen.ping.unicast.hosts:
+   -  172.19.2.51
+   -  172.19.2.50 
+   -  172.19.2.49
+

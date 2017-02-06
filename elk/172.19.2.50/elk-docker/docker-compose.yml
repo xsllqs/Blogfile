@@ -1,0 +1,12 @@
+elasticsearch:
+  image: elasticsearch:5
+  command: elasticsearch
+  environment:
+    - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
+  volumes:
+    - ./elasticsearch:/usr/share/elasticsearch/data
+    - ./es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+

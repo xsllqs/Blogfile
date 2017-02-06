@@ -1,0 +1,36 @@
+elasticsearch:
+  image: elasticsearch:5
+  command: elasticsearch
+  environment:
+    - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
+  volumes:
+    - ./elasticsearch:/usr/share/elasticsearch/data
+    - ./es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+
+logstash:
+  image: logstash:latest
+  command: logstash -w 4 -f /etc/logstash/conf.d/logstash.conf
+  environment:
+    - LS_HEAP_SIZE=2048m
+  volumes:
+    - ./logstash/logstash.conf:/etc/logstash/conf.d/logstash.conf
+  ports:
+    - "20000:20000"
+
+kibana:
+  image: kibana:latest
+  volumes:
+    - ./kibana/kibana.yml:/etc/kibana/kibana.yml
+  ports:
+    - "5601:5601"
+
+kopf:
+  image: lmenezes/elasticsearch-kopf
+  ports:
+    - "80:80"
+  environment:
+    - KOPF_SERVER_NAME=kopf
+    - KOPF_ES_SERVERS=172.19.2.50:9100
